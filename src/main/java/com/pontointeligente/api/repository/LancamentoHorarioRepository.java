@@ -1,7 +1,8 @@
 package com.pontointeligente.api.repository;
 
-import java.util.List;
+import java.util.UUID;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
@@ -16,17 +17,18 @@ import jakarta.persistence.NamedQuery;
 		@NamedQuery(name = LancamentoHorarioRepository.FIND_ALL_BY_FUNCIONARIO,
 					query = "SELECT lh "
 						  + "FROM LancamentoHorario lh "
-						  + "WHERE lh.funcionario.id = :funcionarioId ")
+						  + "WHERE lh.funcionario.code = :code ")
 )
 public interface LancamentoHorarioRepository extends JpaRepository<LancamentoHorario, Long> {
 	
-	public static final String FIND_ALL_BY_FUNCIONARIO = "LancamentoHorarioRepository.findByFuncionarioId";
+	public static final String FIND_ALL_BY_FUNCIONARIO = "lancamentohorariorepository.findByFuncionarioCode";
+	
+	LancamentoHorario findByCode(UUID code);
 	
 	@Transactional(readOnly = true)
-	List<LancamentoHorario> findByFuncionarioId(@Param("funcionarioId") Integer funcionarioId);
+	Page<LancamentoHorario> findByFuncionarioId(@Param("code") UUID code);
 	
 	@Transactional(readOnly = true)
-	List<LancamentoHorario> findByFuncionarioId(@Param("funcionarioId") Integer funcionarioId, 
-												Pageable pageable);
+	Page<LancamentoHorario> findByFuncionarioId(@Param("code")UUID code, Pageable pageable);
 
 }

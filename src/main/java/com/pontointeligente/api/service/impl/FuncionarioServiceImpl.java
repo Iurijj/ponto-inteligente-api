@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.pontointeligente.api.administrativo.entidade.Funcionario;
 import com.pontointeligente.api.repository.FuncionarioRepository;
 import com.pontointeligente.api.service.FuncionarioService;
+import com.pontointeligente.api.utils.MensagemUtil;
 
 @Service
 public class FuncionarioServiceImpl implements FuncionarioService {
@@ -24,7 +25,12 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 	
 	@Override
 	public Funcionario salvar(Funcionario funcionario) {
-		log.info("Salvando o funcionario {}", funcionario);
+		
+		String infoFuncMSgLog = String.format("funcionario: ", funcionario);
+		String msgLog = String.format(MensagemUtil.TEMPLATE_MSG_LOG_SALVAR, infoFuncMSgLog);
+		
+		log.info(msgLog);
+		
 		return this.funcionarioRepository.save(funcionario);
 	}
 
@@ -60,7 +66,7 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 	
 	private void registrarLogConsultaFuncionario(String nomeCampo, String valorCampo) {
 		
-		String msgLog = String.format("Buscando Funcionário pelo %s: %s", nomeCampo, valorCampo); 
+		String msgLog = String.format(MensagemUtil.TEMPLATE_MSG_LOG_BUSCA, "funcionário", nomeCampo, valorCampo);
 		log.info(msgLog);
 		
 	}

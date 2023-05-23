@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.pontointeligente.api.administrativo.entidade.Empresa;
 import com.pontointeligente.api.repository.EmpresaRepository;
 import com.pontointeligente.api.service.EmpresaService;
+import com.pontointeligente.api.utils.MensagemUtil;
 
 @Service
 public class EmpresaServiceImpl implements EmpresaService {
@@ -25,7 +26,9 @@ public class EmpresaServiceImpl implements EmpresaService {
 	@Override
 	public Optional<Empresa> buscarPorCnpj(String cnpj) {
 		
-		log.info("Buscando empresa pelo CNPJ {}", cnpj);
+		String msgLog = String.format(MensagemUtil.TEMPLATE_MSG_LOG_BUSCA, "empresa", "CNPJ", cnpj);
+		
+		log.info(msgLog);
 		Empresa empresaLocalizada = this.empresaRepository.findByCnpj(cnpj);
 		
 		return Optional.ofNullable(empresaLocalizada);
@@ -34,8 +37,12 @@ public class EmpresaServiceImpl implements EmpresaService {
 
 	@Override
 	public Empresa salvar(Empresa empresa) {
-	
-		log.info("Salvando a empresa {}", empresa);
+		
+		String infoEmpresaMSgLog = String.format("empresa: ", empresa);
+		String msgLog = String.format(MensagemUtil.TEMPLATE_MSG_LOG_SALVAR, infoEmpresaMSgLog);
+		
+		log.info(msgLog);
+		
 		return this.empresaRepository.save(empresa);
 	
 	}
