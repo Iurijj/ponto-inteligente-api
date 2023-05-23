@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="migrate-db" name="bug-tracker-build">
+
+	<property environment="env" />
+	
+	<property name="flyway.validateOnMigrate" 	value="false" />
+	<property name="flyway.baselineOnMigrate" 	value="true" />
+	
+	<property name="flyway.locations" 	value="filesystem:src/main/resources/scripts/V1.X.X" />
+	<property name="flyway.url" 		value="jdbc:postgresql://localhost:5432/ponto_inteligente" />
+	<property name="flyway.user" 		value="postgres" />
+	<property name="flyway.password" 	value="postgres" />
+	<property name="flyway.schemas" 	value="dev" />
+	<property name="flyway.separator"	value="__" />
+	<property name="flyway.suffix"		value="auriga.sql" />
+	
+	<target name="migrate-db">
+		
+		<exec executable="/home/tormenta/flyway-9.7.0/flyway" failonerror="true" >
+			
+			<arg line="-validateOnMigrate=${flyway.validateOnMigrate}" />
+			<arg line="-baselineOnMigrate=${flyway.baselineOnMigrate}" />
+			<arg line="-locations=${flyway.locations}" />
+			<arg line="-url=${flyway.url}" />
+			<arg line="-user=${flyway.user}" />
+			<arg line="-password=${flyway.password}" />
+			<arg line="-schemas=${flyway.schemas}" />
+			<arg line="-sqlMigrationSuffixes=${flyway.suffix}" />
+			<arg line="migrate" />
+			
+		</exec>
+		
+	</target>
+
+</project>
